@@ -25,10 +25,9 @@ jobs:
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
           matrix=$(jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g' | sed 's/"//g')
           matrix1="["cdda-experimental-2023-07-23-0530","cdda-experimental-2023-07-22-2222"]"
-          echo "MULTI_LINES_TEXT_ENV_VAR<<EOF" >> $GITHUB_ENV
           echo $matrix
           echo "releases=$matrix1" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_ENV
+     #     echo "EOF" >> $GITHUB_ENV
   matrix_build:
     needs: [fetch_release]
     strategy:
