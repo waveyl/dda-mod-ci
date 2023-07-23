@@ -23,7 +23,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
-          matrix=$(jq '[.[]|.tag_name]' data.json)
+          matrix=$(jq '[.[]|.tag_name]' data.json | sed '/^\s*$/d' )
           echo $matrix
           echo "matrix='$matrix'" >> $GITHUB_OUTPUT
   matrix_build:
