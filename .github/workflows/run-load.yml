@@ -90,6 +90,6 @@ jobs:
         echo $url
         curl -o 'cata_test.zip' -L $url
         unzip -q 'cata_test.zip'
-        mv 'cata_test/cata_test' 'test/'
+        mv 'cata_test' 'test/'
     - name: run tests
       run: bash ./build-scripts/gha_test_only.sh
