@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        release: ${{ steps.fetch_release.outputs.releases }}
+        release: ${{ needs.fetch_release.outputs.releases }}
     runs-on: ubuntu-latest
     name: ${{ matrix.release }}
     env:
