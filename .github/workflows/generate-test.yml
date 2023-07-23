@@ -23,13 +23,13 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
-          jq '.[] | [.tag_name]' data.json >> $GITHUB_OUTPUT
+          echo "matrix=$(jq '.[] | [.tag_name]' data.json)" >> $GITHUB_OUTPUT
   matrix_build:
     needs: [fetch_release]
     strategy:
       fail-fast: false
       matrix: 
-        release: ${{ needs.fetch_release.outputs.releases }}
+        release: ${{ fromJson(needs.fetch_release.outputs.releases) }}
     runs-on: ubuntu-latest
     name: ${{ matrix.release }}
     env:
