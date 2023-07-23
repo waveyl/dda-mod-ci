@@ -66,6 +66,7 @@ jobs:
       CCACHE_FILECLONE: true
       CCACHE_HARDLINK: true
       CCACHE_NOCOMPRESS: true
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - name: checkout repository
       uses: actions/checkout@v3
