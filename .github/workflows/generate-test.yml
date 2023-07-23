@@ -23,7 +23,7 @@ jobs:
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
+            /repos/CleverRaven/Cataclysm-DDA/releases?per_page=3 > data.json
           matrix=$(
             echo '{ "release" : '
             (jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g')
@@ -73,4 +73,21 @@ jobs:
       with:
         repository: 'CleverRaven/Cataclysm-DDA'
         ref: ${{ matrix.release }}
+    - name: install dependencies (ubuntu)
+      run: |
+          sudo apt-get update
+          sudo apt-get install libncursesw5-dev ccache gettext parallel
+          sudo locale-gen en_US.UTF-8 de_DE.UTF-8
+    - name: install SDL2 dependencies (ubuntu)
+      run: |
+          sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev
+    - name: prepare
+      if: ${{ env.SKIP == 'false' }}
+      run: bash ./build-scripts/requirements.sh
+    - name: upload test suite
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: cata_test
+        path: tests/cata_test*
+        if-no-files-found: ignore
       
