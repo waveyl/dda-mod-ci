@@ -1,4 +1,4 @@
-name: Build and upload test suite
+name: Load and run tests
 
 on:
   workflow_dispatch:
