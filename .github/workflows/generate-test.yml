@@ -32,11 +32,21 @@ jobs:
           echo $matrix
           echo "releases=$matrix1" >> $GITHUB_OUTPUT
      #     echo "EOF" >> $GITHUB_ENV
+  check-matrix:
+    runs-on: ubuntu-latest
+    needs: fetch_release
+    steps:
+      - name: Check matrix definition
+        run: |
+          matrix='${{ needs.fetch_release.outputs.releases }}'
+          echo $matrix
+          echo $matrix | jq .
+          echo $matrix | json2yaml
   matrix_build:
-    needs: [fetch_release]
+    needs: [ fetch_release ]
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.fetch_release.outputs.releases) }}
+      matrix: ${{ fromJSON(needs.fetch_release.outputs.releases) }}
     runs-on: ubuntu-latest
     name: ${{ matrix.release }}
     env:
