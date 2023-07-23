@@ -8,7 +8,7 @@ on:
     
 #concurrency:
 #  group: test-build-${{ github.event.pull_request.number || github.ref_name }}
-#  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+#  cancel-in-progress: true
 
 jobs:
   fetch_release:
@@ -87,5 +87,11 @@ jobs:
       with:
         name: cata_test
         path: tests/cata_test*
+        if-no-files-found: ignore
+    - name: upload json formatter
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: json_formatter
+        path: tools/format/json_formatter*
         if-no-files-found: ignore
       
