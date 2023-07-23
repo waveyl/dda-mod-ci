@@ -52,11 +52,11 @@ jobs:
     name: ${{ matrix.release }}
     env:
       ZSTD_CLEVEL: 17
-      COMPILER: clang++-10
+      COMPILER: clang++-12
       TILES: 0
       SOUND: 0
       LOCALIZE: 1
-      MODS: --mods=magiclysm
+      MODS:
       EXTRA_TEST_OPTS: --error-format=github-action
       PCH: 1
       RELEASE: 1
@@ -76,7 +76,7 @@ jobs:
     - name: install dependencies (ubuntu)
       run: |
           sudo apt-get update
-          sudo apt-get install libncursesw5-dev ccache gettext parallel clang-10
+          sudo apt-get install libncursesw5-dev ccache gettext parallel
           sudo locale-gen en_US.UTF-8 de_DE.UTF-8
     - name: prepare
       run: bash ./build-scripts/requirements.sh
