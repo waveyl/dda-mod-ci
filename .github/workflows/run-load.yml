@@ -92,7 +92,7 @@ jobs:
         unzip -q 'cata_test.zip'
         mv 'cata_test' 'tests/'
         sudo chmod a+x tests/cata_test
-        make localization LANGUAGES=all
-        sed -i '58s/parallel/#parallel/g' ./build_scripts/gha_test_only.sh
+        # make localization LANGUAGES=all
+        sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
     - name: run tests
       run: bash ./build-scripts/gha_test_only.sh
