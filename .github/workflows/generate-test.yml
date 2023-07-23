@@ -30,14 +30,13 @@ jobs:
               )
           matrix1="["cdda-experimental-2023-07-23-0530","cdda-experimental-2023-07-22-2222"]"
           echo $matrix
-          echo "releases=$matrix1" >> $GITHUB_OUTPUT
+          echo "releases=$matrix" >> $GITHUB_OUTPUT
      #     echo "EOF" >> $GITHUB_ENV
   matrix_build:
     needs: [fetch_release]
     strategy:
       fail-fast: false
-      matrix: 
-        release: ${{ fromJson(needs.fetch_release.outputs.releases) }}
+      matrix: ${{ fromJson(needs.fetch_release.outputs.releases) }}
     runs-on: ubuntu-latest
     name: ${{ matrix.release }}
     env:
