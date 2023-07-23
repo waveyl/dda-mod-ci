@@ -26,7 +26,7 @@ jobs:
           matrix=$(jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g' | sed 's/"//g')
           echo "MULTI_LINES_TEXT_ENV_VAR<<EOF" >> $GITHUB_ENV
           echo $matrix
-          echo "$matrix" >> $GITHUB_OUTPUT
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_ENV
   matrix_build:
     needs: [fetch_release]
