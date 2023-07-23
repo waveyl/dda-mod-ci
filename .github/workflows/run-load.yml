@@ -106,7 +106,13 @@ jobs:
         mv 'cata_test' 'tests/'
         sudo chmod a+x tests/cata_test
         # make localization LANGUAGES=all
+    - name: mod test suite
+      run: |
         sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
+        mkdir modci
+        cd modci
+        git clone https://github.com/SurFlurer/dda-mod-ci/
+        cp dda-mod-ci/pyutils/get_mods.py ../build-scripts/
         sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: run tests
       run: bash ./build-scripts/gha_test_only.sh
