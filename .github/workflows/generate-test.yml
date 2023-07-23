@@ -73,11 +73,13 @@ jobs:
       with:
         repository: 'CleverRaven/Cataclysm-DDA'
         ref: ${{ matrix.release }}
-    - name: install dependencies (ubuntu)
-      run: |
-          sudo apt-get update
-          sudo apt-get install libncursesw5-dev ccache gettext parallel
-          sudo locale-gen en_US.UTF-8 de_DE.UTF-8
+    - name: see dir
+      run: ls
+#    - name: install dependencies (ubuntu)
+ #     run: |
+#          sudo apt-get update
+#          sudo apt-get install libncursesw5-dev ccache gettext parallel
+#          sudo locale-gen en_US.UTF-8 de_DE.UTF-8
     - name: prepare
       if: ${{ env.SKIP == 'false' }}
       run: bash /home/runner/work/dda-mod-ci/dda-mod-ci/Cataclysm-DDA/build-scripts/requirements.sh
