@@ -13,7 +13,8 @@ on:
 jobs:
   fetch_release:
     runs-on: ubuntu-latest
-    outputs: ${{ steps.fetch_release.outputs.releases }}
+    outputs: 
+      releases: ${{ steps.fetch_release.outputs.releases }}
     steps:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
