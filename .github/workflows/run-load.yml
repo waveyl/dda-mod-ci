@@ -1,0 +1,93 @@
+name: Build and upload test suite
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+    
+#concurrency:
+#  group: test-build-${{ github.event.pull_request.number || github.ref_name }}
+#  cancel-in-progress: true
+
+jobs:
+  fetch_release:
+    runs-on: ubuntu-latest
+    outputs: 
+      releases: ${{ steps.fetch.outputs.releases }}
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: fetch
+        run: |
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/SurFlurer/dda-mod-ci/releases?per_page=1 > data.json
+          matrix=$(
+            echo '{ "release" : '
+            (jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g')
+            echo '}'
+              )
+          matrix=$(echo $matrix | sed ':a;N;$!ba;s/\n/;/g') 
+          matrix1="{ \"release\" : [ \"cdda-experimental-2023-07-23-0530\", \"cdda-experimental-2023-07-22-2222\" ] }"
+          echo $matrix1
+          echo $matrix
+          echo "releases=$matrix" >> $GITHUB_OUTPUT
+ # check-matrix:
+ #   runs-on: ubuntu-latest
+ #   needs: fetch_release
+ #   steps:
+ #     - name: Check matrix definition
+ #       run: |
+ #         matrix='${{ needs.fetch_release.outputs.releases }}'
+ #         echo $matrix
+ #         echo $matrix | jq .
+  matrix_test:
+    needs: [ fetch_release ]
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.fetch_release.outputs.releases) }}
+    runs-on: ubuntu-latest
+    name: ${{ matrix.release }}
+    env:
+      ZSTD_CLEVEL: 17
+      COMPILER: clang++-12
+      TILES: 0
+      SOUND: 0
+      LOCALIZE: 1
+      MODS:
+      EXTRA_TEST_OPTS: --error-format=github-action
+      PCH: 1
+      RELEASE: 1
+      ARCHIVE_SUCCESS: basic-build
+      CCACHE_LIMIT: 2G
+      TEST_STAGE: 1
+      CCACHE_FILECLONE: true
+      CCACHE_HARDLINK: true
+      CCACHE_NOCOMPRESS: true
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v3
+      with:
+        repository: 'CleverRaven/Cataclysm-DDA'
+        ref: ${{ matrix.release }}
+    - name: install dependencies (ubuntu)
+      run: |
+          sudo apt-get update
+          sudo apt-get install libncursesw5-dev ccache gettext parallel
+          sudo locale-gen en_US.UTF-8 de_DE.UTF-8
+    - name: prepare
+      run: bash ./build-scripts/requirements.sh
+    - name: get test suite
+      run: |
+        gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/SurFlurer/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
+        url=$(jq '.assets |.[] |.browser_download_url' release.data)
+        curl -o '${{ github.workspace }}/cata_test.zip' -L $url
+        unzip -q '${{ github.workspace }}/cata_test.zip'
+        mv '${{ github.workspace }}/cata_test/cata_test' '${{ github.workspace }}/test/'
+    - name: run tests
+      run: bash ./build-scripts/gha_test_only.sh
