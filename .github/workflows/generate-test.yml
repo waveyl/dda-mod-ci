@@ -14,10 +14,11 @@ jobs:
   fetch_release:
     runs-on: ubuntu-latest
     outputs: 
-      releases: ${{ steps.fetch_release.outputs.releases }}
+      releases: ${{ steps.fetch.outputs.releases }}
     steps:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: fetch
         run: |
           gh api \
             -H "Accept: application/vnd.github+json" \
