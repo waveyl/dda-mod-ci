@@ -87,6 +87,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/SurFlurer/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
         url=$(jq '.assets |.[] |.browser_download_url' release.data)
+        echo $url
         curl -o '${{ github.workspace }}/cata_test.zip' -L $url
         unzip -q '${{ github.workspace }}/cata_test.zip'
         mv '${{ github.workspace }}/cata_test/cata_test' '${{ github.workspace }}/test/'
