@@ -25,7 +25,7 @@ jobs:
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
           matrix=$(jq '[.[]|.tag_name]' data.json)
           echo $matrix
-          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+          echo "matrix='$matrix'" >> $GITHUB_OUTPUT
   matrix_build:
     needs: [fetch_release]
     strategy:
