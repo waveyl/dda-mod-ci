@@ -88,8 +88,8 @@ jobs:
           /repos/SurFlurer/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
         url=$(jq '.assets |.[] |.browser_download_url' release.data | sed 's/"//g')
         echo $url
-        curl -o '${{ github.workspace }}/cata_test.zip' -L $url
-        unzip -q '${{ github.workspace }}/cata_test.zip'
-        mv '${{ github.workspace }}/cata_test/cata_test' '${{ github.workspace }}/test/'
+        curl -o 'cata_test.zip' -L $url
+        unzip -q 'cata_test.zip'
+        mv 'cata_test/cata_test' 'test/'
     - name: run tests
       run: bash ./build-scripts/gha_test_only.sh
