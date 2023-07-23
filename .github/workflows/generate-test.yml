@@ -71,8 +71,6 @@ jobs:
       with:
         repository: 'CleverRaven/Cataclysm-DDA'
         ref: ${{ matrix.release }}
-    - name: see dir
-      run: ls
     - name: install dependencies (ubuntu)
       run: |
           sudo apt-get update
