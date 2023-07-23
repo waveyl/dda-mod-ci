@@ -84,6 +84,9 @@ jobs:
     - name: prepare
       if: ${{ env.SKIP == 'false' }}
       run: bash ./build-scripts/requirements.sh
+    - name: build
+      if: ${{ env.SKIP == 'false' }}
+      run: bash ./build-scripts/gha_compile_only.sh
     - name: upload test suite
       uses: actions/upload-artifact@v3.1.2
       with:
