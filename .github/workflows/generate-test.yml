@@ -78,15 +78,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install libncursesw5-dev ccache gettext parallel
           sudo locale-gen en_US.UTF-8 de_DE.UTF-8
-    - name: install SDL2 dependencies (ubuntu)
-      run: |
-          sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev
     - name: prepare
       if: ${{ env.SKIP == 'false' }}
-      run: bash Cataclysm-DDA/build-scripts/requirements.sh
+      run: bash /home/runner/work/dda-mod-ci/dda-mod-ci/Cataclysm-DDA/build-scripts/requirements.sh
     - name: build
       if: ${{ env.SKIP == 'false' }}
-      run: bash Cataclysm-DDA/build-scripts/gha_compile_only.sh
+      run: bash /home/runner/work/dda-mod-ci/dda-mod-ci/Cataclysm-DDA/build-scripts/gha_compile_only.sh
     - name: upload test suite
       uses: actions/upload-artifact@v3.1.2
       with:
