@@ -113,6 +113,7 @@ jobs:
         cd modci
         git clone https://github.com/SurFlurer/dda-mod-ci/
         cp dda-mod-ci/pyutils/get_mods.py ../build-scripts/
+        sudo chmod a+x ../build-scripts/get_mods.py
         cd ..
         sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: run tests
