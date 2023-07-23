@@ -24,8 +24,10 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
           matrix=$(jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g' | sed 's/"//g')
+          echo "MULTI_LINES_TEXT_ENV_VAR<<EOF" >> $GITHUB_ENV
           echo $matrix
-          echo "matrix='$matrix'" >> $GITHUB_OUTPUT
+          echo "$matrix" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_ENV
   matrix_build:
     needs: [fetch_release]
     strategy:
