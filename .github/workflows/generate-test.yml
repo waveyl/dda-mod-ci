@@ -25,15 +25,15 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/CleverRaven/Cataclysm-DDA/releases?per_page=2 > data.json
           matrix=$(
-            echo '"{ "release" : '
+            echo '{ "release" : '
             (jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g')
-            echo '}"'
+            echo '}'
               )
      
           matrix1="{ \"package\" : [ \"cdda-experimental-2023-07-23-0530\", \"cdda-experimental-2023-07-22-2222\" ] }"
           echo $matrix1
           echo $matrix
-          echo "releases=$matrix1" >> $GITHUB_OUTPUT
+          echo "releases=$matrix" >> $GITHUB_OUTPUT
 #     matrix=$(echo $matrix | sed "1i\"" | sed "a\"") 
      #     echo "EOF" >> $GITHUB_ENV
   check-matrix:
