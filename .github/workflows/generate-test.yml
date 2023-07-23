@@ -29,7 +29,7 @@ jobs:
             (jq '[.[]|.tag_name]' data.json | sed 's/[[:space:]]//g')
             echo '}'
               )
-          matrix1="{ "package" : [ "cdda-experimental-2023-07-23-0530", "cdda-experimental-2023-07-22-2222" ] }"
+          matrix1="{ \"package\" : [ \"cdda-experimental-2023-07-23-0530\", \"cdda-experimental-2023-07-22-2222\" ] }"
           echo $matrix
           echo "releases=$matrix1" >> $GITHUB_OUTPUT
      #     echo "EOF" >> $GITHUB_ENV
