@@ -91,6 +91,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install libncursesw5-dev ccache gettext parallel
           sudo locale-gen en_US.UTF-8 de_DE.UTF-8
+    - name: install SDL2 dependencies (ubuntu)
+      if: ${{ env.SKIP == 'false' && runner.os == 'Linux' && matrix.tiles == 1 }}
+      run: |
+          sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: get test suite
@@ -101,20 +105,22 @@ jobs:
           /repos/SurFlurer/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
         url=$(jq '.assets |.[0] |.browser_download_url' release.data | sed 's/"//g')
         echo $url
-        curl -o 'cata_test.zip' -L $url
-        unzip -q 'cata_test.zip'
-        mv 'cata_test' 'tests/'
-        sudo chmod a+x tests/cata_test
-        # make localization LANGUAGES=all
+        curl -o 'cataclysm-tiles' -L $url
+        # unzip -q 'cata_test.zip'
+        #  mv 'cata_test' 'tests/'
+        sudo chmod a+x cataclysm-tiles
+        make localization LANGUAGES=all
     - name: mod test suite
       run: |
-        sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
+        # sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
         mkdir modci
         cd modci
         git clone https://github.com/SurFlurer/dda-mod-ci/
         cp dda-mod-ci/pyutils/get_mods.py ../build-scripts/
+        cp dda-mod-ci/pyutils/load_all.sh ../build-scripts/
         sudo chmod a+x ../build-scripts/get_mods.py
+        sudo chmod a+x ../build-scripts/load_all.sh
         cd ..
-        sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
+        # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: run tests
-      run: bash ./build-scripts/gha_test_only.sh
+      run: bash ./build-scripts/load_all.sh
