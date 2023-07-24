@@ -2,9 +2,9 @@ name: Build and upload test suite
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches:
-   # - main
+  push:
+    branches:
+    - main
     
 #concurrency:
 #  group: test-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -96,7 +96,18 @@ jobs:
         name: cata_test
         path: tests/cata_test*
         if-no-files-found: ignore
+    - name: upload exe
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: cataclysm-dda
+        path: cataclysm-dda*
+        if-no-files-found: ignore
+    - name: mv exe
+      run: |
+          mv cataclysm-tiles ../
+    - name: checkout myself
+      uses: actions/checkout@v3
     - name: upload executable
       run: |
-        gh release upload ${{ matrix.release }} cataclysm-tiles
+        gh release upload ${{ matrix.release }} ../cataclysm-tiles
       
