@@ -91,9 +91,9 @@ jobs:
         mkdir modci
         cd modci
         git clone https://github.com/SurFlurer/dda-mod-ci/
-        mv dda-mod-ci/patch/0001-remove-text-style-test.patch ../
+        mv dda-mod-ci/patch/0001-disable-test-mode.patch ../
         cd ..
-        git am 0001-remove-text-style-test.patch
+        git am 0001-disable-test-mode.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: build
