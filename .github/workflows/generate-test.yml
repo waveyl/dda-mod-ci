@@ -53,7 +53,7 @@ jobs:
     env:
       ZSTD_CLEVEL: 17
       COMPILER: clang++-12
-      TILES: 0
+      TILES: 1
       SOUND: 0
       LOCALIZE: 1
       MODS:
@@ -65,7 +65,11 @@ jobs:
       CCACHE_FILECLONE: true
       CCACHE_HARDLINK: true
       CCACHE_NOCOMPRESS: true
+    permissions: write-all
     steps:
+    - name: release
+      run: |
+        gh release create ${{matrix.release}} --title ${{matrix.release}}
     - name: checkout repository
       uses: actions/checkout@v3
       with:
@@ -86,10 +90,7 @@ jobs:
         name: cata_test
         path: tests/cata_test*
         if-no-files-found: ignore
-    - name: upload json formatter
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: json_formatter
-        path: tools/format/json_formatter*
-        if-no-files-found: ignore
+    - name: upload executable
+      run: |
+        gh release upload ${{ matrix.release }} cataclysm-tiles
       
