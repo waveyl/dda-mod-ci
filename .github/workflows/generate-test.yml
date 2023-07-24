@@ -65,6 +65,7 @@ jobs:
       CCACHE_FILECLONE: true
       CCACHE_HARDLINK: true
       CCACHE_NOCOMPRESS: true
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions: write-all
     steps:
     - name: release
