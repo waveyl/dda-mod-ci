@@ -57,19 +57,5 @@ for info in glob.glob('data/mods/*/modinfo.json'):
 
 mods_remaining = set(all_mod_dependencies)
 
-# Make sure aftershock can load by itself.
-add_mods(["aftershock"])
-print_modlist(mods_this_time, mods_remaining)
-
-#while mods_remaining:
-#    for mod in mods_remaining:
-#        if mod not in mods_this_time:
-#            add_mods([mod])
-#    if not mods_remaining & set(mods_this_time):
-#        raise RuntimeError(
-#            'mods remain ({}) but none could be added'.format(mods_remaining))
-#    print_modlist(mods_this_time, mods_remaining)
 for mod in all_mods:
-    add_mods(["dda"])
-    add_mods([mod])
-    print_modlist(mods_this_time, mods_remaining)
+    print_modlist([mod], mods_remaining)
