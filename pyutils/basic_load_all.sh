@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./build-scripts/get_mods.py | \
+./build-scripts/basic_get_mods.py | \
             while read mods
             do
                 ./cataclysm-tiles --check-mods "${mods}"
