@@ -2,9 +2,9 @@ name: dda load mods
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - main
+#  push:
+ #   branches:
+ #   - main
     
 #concurrency:
 #  group: load-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -115,11 +115,11 @@ jobs:
         mkdir modci
         cd modci
         git clone https://github.com/SurFlurer/dda-mod-ci/
-        cp dda-mod-ci/pyutils/get_mods.py ../build-scripts/
-        cp dda-mod-ci/pyutils/load_all.sh ../build-scripts/
-        sudo chmod a+x ../build-scripts/get_mods.py
-        sudo chmod a+x ../build-scripts/load_all.sh
+        cp dda-mod-ci/pyutils/basic_get_mods.py ../build-scripts/
+        cp dda-mod-ci/pyutils/basic_load_all.sh ../build-scripts/
+        sudo chmod a+x ../build-scripts/basic_get_mods.py
+        sudo chmod a+x ../build-scripts/basic_load_all.sh
         cd ..
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: run tests
-      run: bash ./build-scripts/load_all.sh
+      run: bash ./build-scripts/basic_load_all.sh
