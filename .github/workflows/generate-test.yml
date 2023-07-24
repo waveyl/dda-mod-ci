@@ -68,14 +68,14 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions: write-all
     steps:
-    - name: release
-      run: |
-        gh release create ${{matrix.release}} --title ${{matrix.release}}
     - name: checkout repository
       uses: actions/checkout@v3
       with:
         repository: 'CleverRaven/Cataclysm-DDA'
         ref: ${{ matrix.release }}
+    - name: release
+      run: |
+        gh release create ${{matrix.release}} --title ${{matrix.release}}
     - name: install dependencies (ubuntu)
       run: |
           sudo apt-get update
