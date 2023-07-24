@@ -1,0 +1,25 @@
+From 6d9da2593b057550eb50538f84138368884f3b17 Mon Sep 17 00:00:00 2001
+From: Surflurer <22912139+Surflurer@users.noreply.github.com>
+Date: Tue, 25 Jul 2023 00:01:48 +0800
+Subject: [PATCH] disable test mode
+
+---
+ src/main.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main.cpp b/src/main.cpp
+index 22be84d4..a714edb7 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -305,7 +305,7 @@ cli_opts parse_commandline( int argc, const char **argv )
+                 1,
+                 [&result]( int n, const char **params ) -> int {
+                     result.check_mods = true;
+-                    test_mode = true;
++                    test_mode = false;
+                     for( int i = 0; i < n; ++i )
+                     {
+                         result.opts.emplace_back( params[ i ] );
+-- 
+2.39.2
+
