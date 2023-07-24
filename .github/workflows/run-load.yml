@@ -2,9 +2,9 @@ name: Load and run tests
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#    - main
+  push:
+    branches:
+    - main
     
 #concurrency:
 #  group: test-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -56,7 +56,7 @@ jobs:
       COMPILER: clang++-12
       TILES: 0
       SOUND: 0
-      LOCALIZE: 1
+      LOCALIZE: 0
       MODS:
       EXTRA_TEST_OPTS: --error-format=github-action
       PCH: 1
@@ -109,7 +109,7 @@ jobs:
         # unzip -q 'cata_test.zip'
         #  mv 'cata_test' 'tests/'
         sudo chmod a+x cataclysm-tiles
-        make localization LANGUAGES=all
+   #     make localization LANGUAGES=all
     - name: mod test suite
       run: |
         # sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
