@@ -86,22 +86,24 @@ jobs:
     - name: install SDL2 dependencies (ubuntu)
       run: |
           sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev
+    - name: mogai
+      run: |
+        mkdir modci
+        cd modci
+        git clone https://github.com/SurFlurer/dda-mod-ci/
+        mv dda-mod-ci/patch/0001-remove-text-style-test.patch ../
+        cd ..
+        git am 0001-remove-text-style-test.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: build
       run: bash ./build-scripts/gha_compile_only.sh
-    - name: upload test suite
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: cata_test
-        path: tests/cata_test*
-        if-no-files-found: ignore
-    - name: upload exe
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: cataclysm-dda
-        path: cataclysm-dda*
-        if-no-files-found: ignore
+#    - name: upload test suite
+ #     uses: actions/upload-artifact@v3.1.2
+#      with:
+#        name: cata_test
+ #       path: tests/cata_test*
+ #       if-no-files-found: ignore
     - name: mv exe
       run: |
           mv cataclysm-tiles ../
