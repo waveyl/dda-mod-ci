@@ -93,6 +93,8 @@ jobs:
         git clone https://github.com/SurFlurer/dda-mod-ci/
         mv dda-mod-ci/patch/0001-disable-test-mode.patch ../
         cd ..
+        git config --global user.email "runner@github.com"
+        git config --global user.name "runner"
         git am 0001-disable-test-mode.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
