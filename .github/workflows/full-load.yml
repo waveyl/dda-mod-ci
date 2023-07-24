@@ -107,7 +107,7 @@ jobs:
         curl -o 'cata_test' -L $url
         # unzip -q 'cata_test.zip'
         mv 'cata_test' 'tests/'
-        sudo chmod a+x cata_test
+        sudo chmod a+x tests/cata_test
    #     make localization LANGUAGES=all
     - name: mod test suite
       run: |
