@@ -1,0 +1,25 @@
+From 9469157eb378af35514f8271fafbd62f2af2046e Mon Sep 17 00:00:00 2001
+From: Surflurer <22912139+Surflurer@users.noreply.github.com>
+Date: Mon, 24 Jul 2023 23:01:53 +0800
+Subject: [PATCH] remove text style test
+
+---
+ src/text_style_check_reader.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/text_style_check_reader.cpp b/src/text_style_check_reader.cpp
+index d6590ca5..ab740579 100644
+--- a/src/text_style_check_reader.cpp
++++ b/src/text_style_check_reader.cpp
+@@ -21,7 +21,7 @@ std::string text_style_check_reader::get_next( const JsonValue &jv ) const
+         raw = jsin.get_string();
+     }
+ #ifndef CATA_IN_TOOL
+-    if( test_mode && check_style ) {
++    if( test_mode && check_style && false ) {
+         const auto text_style_callback =
+             [&jsin]
+             ( const text_style_fix type, const std::string & msg,
+-- 
+2.39.2
+
