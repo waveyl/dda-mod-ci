@@ -1,4 +1,4 @@
-name: dda load mods
+name: dda check mods
 
 on:
   workflow_dispatch:
