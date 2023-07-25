@@ -5,15 +5,12 @@
 echo "Using bash version $BASH_VERSION"
 set -exo pipefail
 
-num_jobs=3
-parallel_opts="--verbose --linebuffer"
 cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time ${EXTRA_TEST_OPTS}"
 [ -z $NUM_TEST_JOBS ] && num_test_jobs=3 || num_test_jobs=$NUM_TEST_JOBS
 
 # We might need binaries installed via pip, so ensure that our personal bin dir is on the PATH
 export PATH=$HOME/.local/bin:$PATH
 # export so run_test can read it when executed by parallel
-export cata_test_opts 
 } &> /dev/null
 function run_test
 {
@@ -29,12 +26,12 @@ function run_test
     if [ "$test_exit_code" -ne "0" ]
     then
         echo "$3test exited with code $test_exit_code"
-       # exit_code=1
+        exit_code=1
     fi
     if [ "$sed_exit_code" -ne "0" ]
     then
         echo "$3sed exited with code $sed_exit_code"
-        #exit_code=1
+        exit_code=1
     fi
     } &> /dev/null
     return $exit_code
@@ -46,11 +43,18 @@ export -f run_test
 # Because some mods might be mutually incompatible we might need to run a few times.
 
 ./build-scripts/full_get_mods.py | \
-
             while read mods
             do
-                run_test ./tests/cata_test "(${mods})=>" '~*' --user-dir=all_modded --mods="${mods}"
+            {
+                run_test ./tests/cata_test "(${mods})=>" '~*' --user-dir=all_modded --mods="${mods}" > /dev/null
+                result=$?
+                if [[ $result -eq 0 ]]
+                then
+                    echo "${mods}: OK" >> result.json
+                fi
+                if [[ $result -eq 1 ]]
+                then
+                    echo "${mods}: ERROR" >> result.json
+                fi
+            }
             done
-            
-
-# vim:tw=0
