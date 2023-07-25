@@ -62,11 +62,6 @@ jobs:
       PCH: 1
       RELEASE: 1
       ARCHIVE_SUCCESS: basic-build
-      CCACHE_LIMIT: 2G
-      TEST_STAGE: 1
-      CCACHE_FILECLONE: true
-      CCACHE_HARDLINK: true
-      CCACHE_NOCOMPRESS: true
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - name: checkout repository
@@ -124,3 +119,9 @@ jobs:
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
+    - name: upload results
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: ${{matrix.release}}result.json
+        path: result.json*
+        if-no-files-found: ignore
