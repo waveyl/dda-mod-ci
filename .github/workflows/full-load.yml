@@ -84,7 +84,8 @@ jobs:
         echo $url
         curl -o 'Kenan-Modpack-Mod.zip' -L $url
         unzip -q 'Kenan-Modpack-Mod.zip'
-        rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Island'
+        rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Islands'
+        rm -rf 'Kenan-Modpack-Chinese/Aftershock'
         cp -r Kenan-Modpack-Chinese/* data/mods/
     - name: install dependencies (ubuntu)
       run: |
