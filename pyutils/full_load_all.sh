@@ -15,7 +15,7 @@ export PATH=$HOME/.local/bin:$PATH
 function run_test
 {
     {
-    set -e pipefail
+    set -eo pipefail
     test_exit_code=0 sed_exit_code=0 exit_code=0
     test_bin=$1
     prefix=$2
