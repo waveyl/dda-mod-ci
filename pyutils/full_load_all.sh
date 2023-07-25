@@ -3,7 +3,7 @@
 # Script made specifically for running tests on GitHub Actions
 {
 echo "Using bash version $BASH_VERSION"
-set -exo pipefail
+set -e pipefail
 
 cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time ${EXTRA_TEST_OPTS}"
 [ -z $NUM_TEST_JOBS ] && num_test_jobs=3 || num_test_jobs=$NUM_TEST_JOBS
@@ -15,7 +15,7 @@ export PATH=$HOME/.local/bin:$PATH
 function run_test
 {
     {
-    set -eo pipefail
+    set -e pipefail
     test_exit_code=0 sed_exit_code=0 exit_code=0
     test_bin=$1
     prefix=$2
