@@ -45,7 +45,7 @@ export -f run_test
 # just to verify that all the mod data can be successfully loaded.
 # Because some mods might be mutually incompatible we might need to run a few times.
 
-./build-scripts/get_all_mods.py | \
+./build-scripts/full_get_mods.py | \
 
             while read mods
             do
