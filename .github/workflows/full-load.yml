@@ -97,7 +97,7 @@ jobs:
         # sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
         mkdir modci
         cd modci
-        git clone https://github.com/SurFlurer/dda-mod-ci/
+        git clone https://github.com/SurFlurer/dda-mod-ci/ --depth=1
         cp dda-mod-ci/pyutils/full_get_mods.py ../build-scripts/
         cp dda-mod-ci/pyutils/full_load_all.sh ../build-scripts/
         cp dda-mod-ci/pyutils/obsolete_mods.py ../build-scripts/
@@ -109,7 +109,7 @@ jobs:
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: cnk
       run: |
-        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/
+        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
         rm -rf 'Kenan-Structured-Modpack/CDDA-Sky-Islands'
         rm -rf 'Kenan-Structured-Modpack/Aftershock'
