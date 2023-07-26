@@ -8,6 +8,6 @@ for info in glob.glob('data/mods/*/modinfo.json'):
     for e in mod_info:
             if(e["type"] == "MOD_INFO" and e["id"] != "dda" and
                 ("obsolete" not in e or not e["obsolete"])):
-                e["obsolete"] = "true"
+                e["obsolete"] = True
     with open(info,'w', encoding='utf-8') as f:
         json.dump(mod_info,f,ensure_ascii=False)
