@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   push:
    branches:
-   - chaosvolt
+    - main
+   schedule:
+    - cron:  '0 0 * * *'
     
 #concurrency:
 #  group: load-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -111,10 +113,18 @@ jobs:
       run: |
         git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
-        rm -rf 'Kenan-Structured-Modpack/CDDA-Sky-Islands'
-        rm -rf 'Kenan-Structured-Modpack/Aftershock'
-        rm -rf 'Kenan-Structured-Modpack/MMA_Mods_Extension'
-        cp -r Kenan-Structured-Modpack/* ../data/mods/
+        cp -r Kenan-Structured-Modpack/Arcana ../data/mods/
+        cp -r Kenan-Structured-Modpack/DDA_Arcana_Aftershock_Patch ../data/mods/
+        cp -r Kenan-Structured-Modpack/DDA_Arcana_Cata++_Patch ../data/mods/
+        cp -r Kenan-Structured-Modpack/DDA_Arcana_Dinomod_Patch ../data/mods/
+        cp -r Kenan-Structured-Modpack/DDA_Arcana_Magiclysm_Patch ../data/mods/
+        cp -r Kenan-Structured-Modpack/Dorf_Life ../data/mods/
+        cp -r Kenan-Structured-Modpack/Medieval_Mod_Reborn ../data/mods/
+        cp -r Kenan-Structured-Modpack/Mining_Mod ../data/mods/
+        cp -r Kenan-Structured-Modpack/MST_Extra ../data/mods/
+        cp -r Kenan-Structured-Modpack/nocts_cata_mod_DDA ../data/mods/
+        cp -r Kenan-Structured-Modpack/Nonperishable_Overhaul ../data/mods/
+        cp -r Kenan-Structured-Modpack/Tankmod_Revived ../data/mods/
         rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
