@@ -69,14 +69,6 @@ jobs:
       with:
         repository: 'CleverRaven/Cataclysm-DDA'
         ref: ${{ matrix.release }}
-    - name: cnk
-      run: |
-        url= "https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/releases/download/2023-07-25-1758/Kenan-Modpack-Mod.zip"
-        curl -o 'Kenan-Modpack-Mod.zip' -L $url
-        unzip -q 'Kenan-Modpack-Mod.zip'
-        rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Islands'
-        rm -rf 'Kenan-Modpack-Chinese/Aftershock'
-        cp -r Kenan-Modpack-Chinese/* data/mods/
     - name: install dependencies (ubuntu)
       run: |
           sudo apt-get update
@@ -108,10 +100,23 @@ jobs:
         git clone https://github.com/SurFlurer/dda-mod-ci/
         cp dda-mod-ci/pyutils/full_get_mods.py ../build-scripts/
         cp dda-mod-ci/pyutils/full_load_all.sh ../build-scripts/
+        cp dda-mod-ci/pyutils/obsolete_mods.py ../build-scripts/
         sudo chmod a+x ../build-scripts/full_get_mods.py
         sudo chmod a+x ../build-scripts/full_load_all.sh
+        sudo chmod a+x ../build-scripts/obsolete_mods.py
         cd ..
+        ./build-scripts/obsolete_mods.py
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
+    - name: cnk
+      run: |
+        url="https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/releases/download/2023-07-25-1758/Kenan-Modpack-Mod.zip"
+        echo $url
+        curl -o 'Kenan-Modpack-Mod.zip' -L $url
+        unzip -q 'Kenan-Modpack-Mod.zip'
+        rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Islands'
+        rm -rf 'Kenan-Modpack-Chinese/Aftershock'
+        rm -rf 'Kenan-Modpack-Chinese/MMA_Mods_Extension'
+        cp -r Kenan-Modpack-Chinese/* data/mods/
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
     - name: upload results
