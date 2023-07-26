@@ -22,7 +22,6 @@ function run_test
     shift 2
     } &> /dev/null
     $WINE "$test_bin" ${cata_test_opts} "$@" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' || test_exit_code="${PIPESTATUS[0]}" sed_exit_code="${PIPESTATUS[1]}"
-    {
     if [ "$test_exit_code" -ne "0" ]
     then
         echo "$3test exited with code $test_exit_code"
@@ -33,7 +32,6 @@ function run_test
         echo "$3sed exited with code $sed_exit_code"
         exit_code=1
     fi
-    } &> /dev/null
     return $exit_code
 }
 export -f run_test
