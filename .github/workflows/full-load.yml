@@ -81,6 +81,7 @@ jobs:
         unzip -q 'Kenan-Modpack-Mod.zip'
         rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Islands'
         rm -rf 'Kenan-Modpack-Chinese/Aftershock'
+        rm -rf 'Kenan-Modpack-Chinese/MMA_Mods_Extension'
         cp -r Kenan-Modpack-Chinese/* data/mods/
     - name: install dependencies (ubuntu)
       run: |
