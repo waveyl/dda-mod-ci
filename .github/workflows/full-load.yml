@@ -1,4 +1,4 @@
-name: test suite load mods
+name: CV's mods test
 
 on:
   workflow_dispatch:
