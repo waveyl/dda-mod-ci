@@ -46,7 +46,7 @@ export -f run_test
             while read mods
             do
             {
-                run_test ./tests/cata_test "(${mods})=>" '~*' --user-dir=all_modded --mods="${mods}" > /dev/null
+                run_test ./tests/cata_test "(${mods})=>" '~*' --user-dir=all_modded --mods="${mods}"
                 result=$?
                 if [[ $result -eq 0 ]]
                 then
