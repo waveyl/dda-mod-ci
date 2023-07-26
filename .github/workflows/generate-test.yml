@@ -2,6 +2,8 @@ name: Build and upload test suite
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '40 6,18 * * *'
 #  push:
 #    branches:
 #    - main

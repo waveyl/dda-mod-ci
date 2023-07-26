@@ -97,7 +97,7 @@ jobs:
         # sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
         mkdir modci
         cd modci
-        git clone https://github.com/SurFlurer/dda-mod-ci/
+        git clone https://github.com/SurFlurer/dda-mod-ci/ --depth=1
         cp dda-mod-ci/pyutils/full_get_mods.py ../build-scripts/
         cp dda-mod-ci/pyutils/full_load_all.sh ../build-scripts/
         cp dda-mod-ci/pyutils/obsolete_mods.py ../build-scripts/
@@ -109,14 +109,13 @@ jobs:
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: cnk
       run: |
-        url="https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/releases/download/2023-07-25-1758/Kenan-Modpack-Mod.zip"
-        echo $url
-        curl -o 'Kenan-Modpack-Mod.zip' -L $url
-        unzip -q 'Kenan-Modpack-Mod.zip'
-        rm -rf 'Kenan-Modpack-Chinese/CDDA-Sky-Islands'
-        rm -rf 'Kenan-Modpack-Chinese/Aftershock'
-        rm -rf 'Kenan-Modpack-Chinese/MMA_Mods_Extension'
-        cp -r Kenan-Modpack-Chinese/* data/mods/
+        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
+        cd CDDA-Kenan-Modpack-Chinese/
+        rm -rf 'Kenan-Structured-Modpack/CDDA-Sky-Islands'
+        rm -rf 'Kenan-Structured-Modpack/Aftershock'
+        rm -rf 'Kenan-Structured-Modpack/MMA_Mods_Extension'
+        cp -r Kenan-Structured-Modpack/* ../data/mods/
+        rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
     - name: upload results

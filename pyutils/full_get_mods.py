@@ -10,13 +10,6 @@ import json
 
 mods_this_time = []
 
-# and compatible_with(mod, mods_this_time)
-def compatible_with(mod, existing_mods):
-    if mod in total_conversions and total_conversions & set(existing_mods):
-        return False
-    return True
-
-
 def add_mods(mods):
     for mod in mods:
         if mod not in all_mod_dependencies:
@@ -38,27 +31,22 @@ def print_modlist(modlist, master_list):
 
 
 all_mod_dependencies = {}
-total_conversions = set()
 all_mods = set()
 
 for info in glob.glob('data/mods/*/modinfo.json'):
     mod_info = json.load(open(info, encoding='utf-8'))
     for e in mod_info:
-        if(e["type"] == "MOD_INFO" and
-                ("obsolete" not in e or not e["obsolete"])):
+        if(e["type"] == "MOD_INFO"):
             if("id" not in e):
                 ident = e["ident"]
             else:
                 ident = e["id"]
-            all_mods.add(ident)
             all_mod_dependencies[ident] = e.get("dependencies", [])
-          #  if e["category"] == "total_conversion":
-          #      total_conversions.add(ident)
+            if("obsolete" not in e or not e["obsolete"]):
+                all_mods.add(ident)
 
-mods_remaining = set(all_mod_dependencies)
+mods_remaining = set()
 
 for mod in all_mods:
-    for dep in all_mod_dependencies[mod]:
-        mods_this_time.append(dep)
-    mods_this_time.append(mod)
+    add_mods([mod])
     print_modlist(mods_this_time, mods_remaining)
