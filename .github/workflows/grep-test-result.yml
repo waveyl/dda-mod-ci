@@ -33,8 +33,12 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/SurFlurer/dda-mod-ci/actions/runs/$run_id/artifacts > arti.data
-          arti_url=$(jq '.artifacts|.[0]|.archive_download_url' arti.data | sed 's/"//g')
-          curl -o $release.zip -L $arti_url
+          arti_id=$(jq '.artifacts|.[0]|.id' arti.data | sed 's/"//g')
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/SurFlurer/dda-mod-ci/actions/artifacts/$arti_id/zip > $release.zip
+          /repos/OWNER/REPO/actions/artifacts/ARTIFACT_ID/ARCHIVE_FORMAT
           ls
           unzip -q $release.zip
           cat result.json
