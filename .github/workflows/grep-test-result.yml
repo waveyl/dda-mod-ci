@@ -48,12 +48,12 @@ jobs:
           rm -rf dda-mod-ci/
           git clone -b result https://github.com/SurFlurer/dda-mod-ci
           cd dda-mod-ci
+          git config user.email "Surflurer@github.com"
+          git config user.name "Surflurer"
           mkdir $release
           cd ..
           cp *.log dda-mod-ci/$release/
           cd dda-mod-ci
-          git config user.email "runner@github.com"
-          git config user.name "runner"
           git add .
           git commit -m "auto-update"
           git push
