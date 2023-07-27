@@ -45,7 +45,7 @@ jobs:
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
           ls
-          cat name.data
+          cat dda.log
           rm -rf dda-mod-ci/
       - name: checkout result
         uses: actions/checkout@v3
