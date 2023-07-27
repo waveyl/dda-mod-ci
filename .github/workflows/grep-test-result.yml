@@ -41,6 +41,7 @@ jobs:
           unzip -q $release.zip
           # cat result.json | grep "ERROR" > ERROR.data
           git clone https://github.com/SurFlurer/dda-mod-ci
+          mv dda-mod-ci/pyutils/process_result.sh dda-mod-ci/
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
           ls
