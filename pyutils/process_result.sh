@@ -6,5 +6,5 @@ done < result.json
 
 while read line
 do
-    cat logs.data | grep "${line}" > ${line}.log
+    cat logs.data | grep "(${line})" > ${line}.log
 done < name.data
