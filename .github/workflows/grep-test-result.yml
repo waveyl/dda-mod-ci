@@ -38,7 +38,6 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/SurFlurer/dda-mod-ci/actions/artifacts/$arti_id/zip > $release.zip
-          /repos/OWNER/REPO/actions/artifacts/ARTIFACT_ID/ARCHIVE_FORMAT
           ls
           unzip -q $release.zip
           cat result.json
