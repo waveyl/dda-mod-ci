@@ -45,14 +45,13 @@ jobs:
           mv dda-mod-ci/pyutils/process_result.sh dda-mod-ci/
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
-          ls
-          cat dda.log
           rm -rf dda-mod-ci/
           mkdir modci
           cd modci
           git clone -b result --single-branch https://github.com/SurFlurer/dda-mod-ci
           mkdir $release
           cd ..
+          ls
           mv *.log modci/$release/
           cd modci
           git config --global user.email "runner@github.com"
