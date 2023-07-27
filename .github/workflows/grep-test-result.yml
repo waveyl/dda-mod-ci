@@ -54,6 +54,7 @@ jobs:
           cd ..
           cp *.log dda-mod-ci/$release/
           cd dda-mod-ci
+          echo "X" > LICENSE
           git add .
           git commit -m "auto-update"
           git push
