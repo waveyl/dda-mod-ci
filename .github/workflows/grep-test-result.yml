@@ -40,5 +40,23 @@ jobs:
             /repos/SurFlurer/dda-mod-ci/actions/artifacts/$arti_id/zip > $release.zip
           ls
           unzip -q $release.zip
-          cat result.json
+          while read line \
+          do \
+            echo $line | cut -d \: -f 1 >> name.data \
+          done < result.json
+          cat name.data
+          mkdir modci
+          cd modci
+      - name: checkout result
+        uses: actions/checkout@v3
+        with:
+          repository: 'SurFlurer/dda-mod-ci'
+          ref: result
+      - name: upload
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir $release
+
+
           
