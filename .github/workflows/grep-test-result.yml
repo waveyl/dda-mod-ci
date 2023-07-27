@@ -1,0 +1,14 @@
+name: grep test results
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  fetch-logs:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      id: fetch
+      run: |
+        gh api \
