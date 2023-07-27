@@ -52,11 +52,6 @@ jobs:
         with:
           repository: 'SurFlurer/dda-mod-ci'
           ref: result
-      - name: upload
-      - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir $release
 
 
           
