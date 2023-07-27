@@ -46,15 +46,14 @@ jobs:
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
           rm -rf dda-mod-ci/
-          git clone -b result --single-branch https://github.com/SurFlurer/dda-mod-ci
+          git clone -b result https://github.com/SurFlurer/dda-mod-ci
           cd dda-mod-ci
           mkdir $release
           cd ..
-          mv *.log dda-mod-ci/$release/
+          cp *.log dda-mod-ci/$release/
           cd dda-mod-ci
-          git config --global user.email "runner@github.com"
-          git config --global user.name "runner"
-          ls $release/
+          git config user.email "runner@github.com"
+          git config user.name "runner"
           git add .
           git commit -m "auto-update"
           git push
