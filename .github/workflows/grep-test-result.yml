@@ -19,4 +19,9 @@ jobs:
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/runs/$run_id/jobs
+            /repos/SurFlurer/dda-mod-ci/actions/runs/$run_id/jobs > job.data
+          job_id=$(jq '.jobs|.[1]|.id' job.data)
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/SurFlurer/dda-mod-ci/actions/jobs/$job_id/logs
