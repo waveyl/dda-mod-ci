@@ -60,7 +60,8 @@ jobs:
           release=$(cat ../release)
           mkdir $release
           cp ../*.log $release/
-          git add .
+          git add */log
+          git add $release/
           git commit -m "auto-update"
       - name: Push changes
         uses: ad-m/github-push-action@master
