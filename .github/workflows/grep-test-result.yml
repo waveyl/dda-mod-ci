@@ -52,6 +52,7 @@ jobs:
         with:
           ref: result
           fetch-depth: 0
+          token: ${{ secrets.PAT }}
       - name: Commit files
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -66,5 +67,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           branch: result
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT }}
           
