@@ -46,16 +46,22 @@ jobs:
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
           rm -rf dda-mod-ci/
-          git clone -b result https://github.com/SurFlurer/dda-mod-ci
-          cd dda-mod-ci
+          cp *.log ../
+          echo "$release" > ../release
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          ref: result
+          fetch-depth: 0
+      - name: Commit files
+        run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          release=$(cat ../release)
           mkdir $release
-          cd ..
-          cp *.log dda-mod-ci/$release/
-          cd dda-mod-ci
-          echo "X" > LICENSE
-          git commit -a -m "auto-update"
+          cp ../*.log $release/
+          git add .
+          git commit -m "auto-update"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
