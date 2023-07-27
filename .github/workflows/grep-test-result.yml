@@ -46,7 +46,7 @@ jobs:
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh
           rm -rf dda-mod-ci/
-          cp *.log ../
+          cp *.testlog ../
           echo "$release" > ../release
       - uses: actions/checkout@v3
         with:
@@ -59,8 +59,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           release=$(cat ../release)
           mkdir $release
-          cp ../*.log $release/
-          git add $release/*.log
+          cp ../*.testlog $release/
+          git add .
           git add $release/
           git commit -m "auto-update"
       - name: Push changes
