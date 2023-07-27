@@ -54,7 +54,7 @@ jobs:
           cd dda-mod-ci
           git config --global user.email "runner@github.com"
           git config --global user.name "runner"
-          ls
+          ls $release/
           git add .
           git commit -m "auto-update"
           git push
