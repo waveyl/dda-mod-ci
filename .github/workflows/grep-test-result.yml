@@ -2,9 +2,9 @@ name: grep test results
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches:
-  #  - main
+  push:
+    branches:
+    - main
   
 jobs:
   fetch-logs:
@@ -12,6 +12,7 @@ jobs:
     steps:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: fetch
         id: fetch
         run: |
           gh api \
