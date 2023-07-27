@@ -12,7 +12,7 @@ jobs:
     steps:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: fetch
+        name: fetch
         id: fetch
         run: |
           gh api \
@@ -48,8 +48,24 @@ jobs:
           ls
           cat dda.log
           rm -rf dda-mod-ci/
+          mkdir modci
+          cd modci
       - name: checkout result
         uses: actions/checkout@v3
         with:
           repository: 'SurFlurer/dda-mod-ci'
           ref: result
+      - name: upload
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir $release
+          cd ..
+          mv *.log modci/$release/
+          cd modci
+          git config --global user.email "runner@github.com"
+          git config --global user.name "runner"
+          git add .
+          git commit -m "auto-update"
+          git push
+          
