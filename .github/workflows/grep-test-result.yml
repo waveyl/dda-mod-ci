@@ -51,11 +51,11 @@ jobs:
           git clone -b result --single-branch https://github.com/SurFlurer/dda-mod-ci
           mkdir $release
           cd ..
-          ls
           mv *.log modci/$release/
           cd modci
           git config --global user.email "runner@github.com"
           git config --global user.name "runner"
+          ls
           git add .
           git commit -m "auto-update"
           git push
