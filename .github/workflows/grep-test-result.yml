@@ -59,6 +59,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          release=$(jq '.jobs|.[1]|.name' ../job.data | sed 's/"//g')
           mkdir $release
           cd ..
           mv *.log modci/$release/
