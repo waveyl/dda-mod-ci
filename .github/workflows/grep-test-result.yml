@@ -50,18 +50,7 @@ jobs:
           rm -rf dda-mod-ci/
           mkdir modci
           cd modci
-      - name: checkout result
-        uses: actions/checkout@v3
-        with:
-          repository: 'SurFlurer/dda-mod-ci'
-          ref: result
-      - name: upload
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ls 
-          ls ./
-          release=$(jq '.jobs|.[1]|.name' ../job.data | sed 's/"//g')
+          git clone -b result --single-branch https://github.com/SurFlurer/dda-mod-ci
           mkdir $release
           cd ..
           mv *.log modci/$release/
