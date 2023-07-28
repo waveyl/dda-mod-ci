@@ -2,6 +2,8 @@ name: test suite load mods
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '40 0,12 * * *'
 #  push:
  #   branches:
  #   - main
