@@ -53,7 +53,7 @@ export -f run_test
                 if [[ $result -eq 1 ]]
                 then
                     echo "${mods}: ERROR" >> result.json
-                    cat ${mods}.data
+                    cat “${mods}.data“
                 fi
             }
             done
