@@ -119,7 +119,6 @@ jobs:
         cp -r Kenan-Structured-Modpack/Dino_Mad_Science ../data/mods/
         cp -r Kenan-Structured-Modpack/Lighter_Weariness ../data/mods/
         cp -r Kenan-Structured-Modpack/MagicRevampAdditions ../data/mods/
-        cp -r Kenan-Structured-Modpack/Make_Bows_Great_Again ../data/mods/
         cp -r Kenan-Structured-Modpack/World_On_Fire ../data/mods/
         cp -r Kenan-Structured-Modpack/blazemod ../data/mods/
         cp -r Kenan-Structured-Modpack/pixels_fuckery ../data/mods/
