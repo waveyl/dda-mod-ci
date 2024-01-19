@@ -3,7 +3,7 @@
 # Script made specifically for running tests on GitHub Actions
 {
 echo "Using bash version $BASH_VERSION"
-#set -x pipefail
+set -x pipefail
 
 cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time ${EXTRA_TEST_OPTS}"
 [ -z $NUM_TEST_JOBS ] && num_test_jobs=3 || num_test_jobs=$NUM_TEST_JOBS
