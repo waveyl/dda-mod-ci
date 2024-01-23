@@ -1,0 +1,25 @@
+From d69615249160319be4720d4f76f67a33f25355b2 Mon Sep 17 00:00:00 2001
+From: Surflurer <22912139+Surflurer@users.noreply.github.com>
+Date: Mon, 22 Jan 2024 18:17:31 +0800
+Subject: [PATCH] stop checking too many mattacks of a type
+
+---
+ src/monstergenerator.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/monstergenerator.cpp b/src/monstergenerator.cpp
+index 0a69fd8b1c..ea16adb6dc 100644
+--- a/src/monstergenerator.cpp
++++ b/src/monstergenerator.cpp
+@@ -1477,7 +1477,7 @@ void mtype::add_special_attack( const JsonObject &obj, const std::string &src )
+         if( iter != special_attacks_names.end() ) {
+             special_attacks_names.erase( iter );
+         }
+-        if( test_mode ) {
++        if( test_mode && false ) {
+             debugmsg( "%s specifies more than one attack of (sub)type %s, ignoring all but the last",
+                       id.c_str(), new_attack->id.c_str() );
+         }
+-- 
+2.37.3.windows.1
+
