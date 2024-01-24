@@ -2,9 +2,9 @@ name: grep test results
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - main
+#  push:
+#    branches:
+#    - main
   
 jobs:
   fetch-logs:
