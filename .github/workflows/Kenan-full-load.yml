@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
    branches:
-    - main
+    - fix_test
   schedule:
     - cron:  '0 0 * * *'
     
@@ -111,7 +111,7 @@ jobs:
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: cnk
       run: |
-        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
+        git clone -b fix_test --single-branch https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
         cp -r Kenan-Structured-Modpack/Arcana ../data/mods/
         cp -r Kenan-Structured-Modpack/BL9-100%_monster_resilience_version ../data/mods/
