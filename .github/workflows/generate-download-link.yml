@@ -3,7 +3,7 @@ name: Generate download link
 on:
   workflow_dispatch:
   schedule:
-    - cron: '40 6 * * *'
+    - cron: '40 18 * * *'
 jobs:
   fetch_release:
     runs-on: ubuntu-latest
@@ -54,9 +54,9 @@ jobs:
           echo $release
           echo -e $release"\n" > README.md
           echo -e "Android x64:\n" >> README.md
-          echo -e "https://mirror.ghproxy.com/https://github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-android-x64-"$release".apk\n" >> README.md
+          echo -e "mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-android-x64-"$release".apk\n" >> README.md
           echo -e "Windows x64 msvc:\n" >> README.md
-          echo -e "https://mirror.ghproxy.com/https://github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-windows-tiles-x64-msvc-"$release".zip\n" >> README.md
+          echo -e "mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-windows-tiles-x64-msvc-"$release".zip\n" >> README.md
           git add .
           git commit -m "auto-update"
     - name: Push changes
