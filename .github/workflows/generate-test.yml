@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '40 6,18 * * *'
-#  push:
-#    branches:
-#    - main
+  push:
+    branches:
+    - main
     
 #concurrency:
 #  group: test-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -98,7 +98,7 @@ jobs:
         git config --global user.name "runner"
         git am modci/dda-mod-ci/patch/0001-disable-test-mode.patch
         git am modci/dda-mod-ci/patch/0002-stop-checking-too-many-mattacks-of-a-type.patch
-        git am modci/dda-mod-ci/patch/0003-Do-not-check-for-last-world-info.patch
+        # git am modci/dda-mod-ci/patch/0003-Do-not-check-for-last-world-info.patch
         git am modci/dda-mod-ci/patch/0004-no-check-mattack-overwrite.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
