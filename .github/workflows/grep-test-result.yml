@@ -18,30 +18,30 @@ jobs:
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/workflows/full-load.yml/runs > run.data
+            /repos/waveyl/dda-mod-ci/actions/workflows/full-load.yml/runs > run.data
           run_id=$(jq '.workflow_runs|.[0]|.id' run.data)
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/runs/$run_id/jobs > job.data
+            /repos/waveyl/dda-mod-ci/actions/runs/$run_id/jobs > job.data
           job_id=$(jq '.jobs|.[1]|.id' job.data)
           release=$(jq '.jobs|.[1]|.name' job.data | sed 's/"//g')
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/jobs/$job_id/logs | grep "(dda" > logs.data
+            /repos/waveyl/dda-mod-ci/actions/jobs/$job_id/logs | grep "(dda" > logs.data
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/runs/$run_id/artifacts > arti.data
+            /repos/waveyl/dda-mod-ci/actions/runs/$run_id/artifacts > arti.data
           arti_id=$(jq '.artifacts|.[0]|.id' arti.data | sed 's/"//g')
           gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/SurFlurer/dda-mod-ci/actions/artifacts/$arti_id/zip > $release.zip
+            /repos/waveyl/dda-mod-ci/actions/artifacts/$arti_id/zip > $release.zip
           unzip -q $release.zip
           # cat result.json | grep "ERROR" > ERROR.data
-          git clone https://github.com/SurFlurer/dda-mod-ci
+          git clone https://github.com/waveyl/dda-mod-ci
           mv dda-mod-ci/pyutils/process_result.sh dda-mod-ci/
           chmod a+x dda-mod-ci/process_result.sh
           ./dda-mod-ci/process_result.sh

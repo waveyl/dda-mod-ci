@@ -92,7 +92,7 @@ jobs:
       run: |
         mkdir modci
         cd modci
-        git clone https://github.com/SurFlurer/dda-mod-ci/
+        git clone https://github.com/waveyl/dda-mod-ci/
         cd ..
         git config --global user.email "runner@github.com"
         git config --global user.name "runner"
