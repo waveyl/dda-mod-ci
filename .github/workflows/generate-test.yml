@@ -71,7 +71,7 @@ jobs:
     permissions: write-all
     steps:
     - name: checkout myself
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: release
       run: |
         gh release create ${{matrix.release}} --title ${{matrix.release}}
@@ -105,7 +105,7 @@ jobs:
     - name: build
       run: bash ./build-scripts/gha_compile_only.sh
 #    - name: upload test suite
- #     uses: actions/upload-artifact@v3.1.2
+ #     uses: actions/upload-artifact@v4
 #      with:
 #        name: cata_test
  #       path: tests/cata_test*
@@ -115,7 +115,7 @@ jobs:
           mv cataclysm-tiles ../
           mv tests/cata_test ../
     - name: checkout myself
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: upload executable
       run: |
         gh release upload ${{ matrix.release }} ../cataclysm-tiles
