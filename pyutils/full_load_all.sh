@@ -44,7 +44,7 @@ export -f run_test
             while read mods
             do
             {
-                run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --user-dir=all_modded --mods="${mods}" > "${mods}.data"
+                run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --drop-world --user-dir=all_modded --mods="${mods}" > "${mods}.data"
                 result=$?
                 if [[ $result -eq 0 ]]
                 then
