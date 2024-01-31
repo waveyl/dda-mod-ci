@@ -119,7 +119,7 @@ jobs:
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
     - name: upload results
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@v4.3.0
       with:
         name: ${{matrix.release}}result.json
         path: result.json*
