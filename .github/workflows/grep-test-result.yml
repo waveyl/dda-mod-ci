@@ -48,7 +48,7 @@ jobs:
           rm -rf dda-mod-ci/
           cp *.testlog ../
           echo "$release" > ../release
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: result
           fetch-depth: 0
