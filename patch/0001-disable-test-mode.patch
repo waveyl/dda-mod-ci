@@ -1,7 +1,7 @@
-From d6409d3dfa67a38591c973cada2f12187fd7df99 Mon Sep 17 00:00:00 2001
+From 9ffa0b7647a05450c21dd091970d3418ff13cf30 Mon Sep 17 00:00:00 2001
 From: Surflurer <22912139+Surflurer@users.noreply.github.com>
-Date: Tue, 25 Jul 2023 07:45:47 +0800
-Subject: [PATCH] disable test mode
+Date: Fri, 16 Feb 2024 23:30:00 +0800
+Subject: [PATCH] disable some tests
 
 ---
  src/main.cpp                    | 2 +-
@@ -10,10 +10,10 @@ Subject: [PATCH] disable test mode
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/main.cpp b/src/main.cpp
-index 22be84d4..a714edb7 100644
+index 6d55615123..3c1d73b65f 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
-@@ -305,7 +305,7 @@ cli_opts parse_commandline( int argc, const char **argv )
+@@ -325,7 +325,7 @@ cli_opts parse_commandline( int argc, const char **argv )
                  1,
                  [&result]( int n, const char **params ) -> int {
                      result.check_mods = true;
@@ -23,7 +23,7 @@ index 22be84d4..a714edb7 100644
                      {
                          result.opts.emplace_back( params[ i ] );
 diff --git a/src/text_style_check_reader.cpp b/src/text_style_check_reader.cpp
-index d6590ca5..c8b4553b 100644
+index d6590ca5f7..c8b4553b35 100644
 --- a/src/text_style_check_reader.cpp
 +++ b/src/text_style_check_reader.cpp
 @@ -10,7 +10,7 @@ std::string text_style_check_reader::get_next( const JsonValue &jv ) const
@@ -36,11 +36,11 @@ index d6590ca5..c8b4553b 100644
          JsonObject jsobj = jsin.get_object();
          raw = jsobj.get_string( "str" );
 diff --git a/src/translation.cpp b/src/translation.cpp
-index 807db2f6..3cb37216 100644
+index 8ba2a2bca2..2ad6d874ea 100644
 --- a/src/translation.cpp
 +++ b/src/translation.cpp
 @@ -129,7 +129,7 @@ void translation::deserialize( const JsonValue &jsin )
-     if( jsin.test_string() ) {
+ 
          ctxt = nullptr;
  #ifndef CATA_IN_TOOL
 -        const bool check_style = test_mode;
@@ -48,15 +48,15 @@ index 807db2f6..3cb37216 100644
  #else
          const bool check_style = false;
  #endif
-@@ -168,7 +168,7 @@ void translation::deserialize( const JsonValue &jsin )
-             ctxt = nullptr;
-         }
+@@ -196,7 +196,7 @@ void translation::deserialize( const JsonObject &jsobj )
+         ctxt = nullptr;
+     }
  #ifndef CATA_IN_TOOL
--        const bool check_style = test_mode && !jsobj.has_member( "//NOLINT(cata-text-style)" );
-+        const bool check_style = false && !jsobj.has_member( "//NOLINT(cata-text-style)" );
+-    const bool check_style = test_mode && !jsobj.has_member( "//NOLINT(cata-text-style)" );
++    const bool check_style = false && !jsobj.has_member( "//NOLINT(cata-text-style)" );
  #else
-         const bool check_style = false;
+     const bool check_style = false;
  #endif
 -- 
-2.39.2
+2.37.3.windows.1
 
