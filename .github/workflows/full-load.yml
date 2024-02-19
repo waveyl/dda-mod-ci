@@ -115,9 +115,6 @@ jobs:
         cd CDDA-Kenan-Modpack-Chinese/
         rm -rf 'Kenan-Structured-Modpack/Aftershock'
         rm -rf 'Kenan-Structured-Modpack/MMA_Mods_Extension'
-        rm -rf 'Kenan-Structured-Modpack/NPC_VOICEROIDs'
-        rm -rf 'Kenan-Structured-Modpack/VOICEROID+Ex_mod'
-        rm -rf 'Kenan-Structured-Modpack/Cataclysm-DDA-Touhou-Expansion'
         cp -r Kenan-Structured-Modpack/* ../data/mods/
         rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
