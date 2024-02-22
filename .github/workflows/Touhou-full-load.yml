@@ -115,6 +115,7 @@ jobs:
         cd CDDA-Kenan-Modpack-Chinese/
         cp -r Kenan-Structured-Modpack/Cataclysm-DDA-Touhou-Mod ../data/mods/
         cp -r Kenan-Structured-Modpack/Cataclysm-DDA-Touhou-Expansion ../data/mods/
+        cp -r Kenan-Structured-Modpack/PM_World ../data/mods/
         rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
