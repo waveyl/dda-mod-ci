@@ -32,8 +32,6 @@ jobs:
             echo '}'
               )
           matrix=$(echo $matrix | sed ':a;N;$!ba;s/\n/;/g') 
-          matrix1="{ \"release\" : [ \"cdda-experimental-2023-07-23-0530\", \"cdda-experimental-2023-07-22-2222\" ] }"
-          echo $matrix1
           echo $matrix
           echo "releases=$matrix" >> $GITHUB_OUTPUT
  # check-matrix:
@@ -70,6 +68,13 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions: write-all
     steps:
+    - name: check tag
+      run: |
+        latest_tag=$(gh api /repos/waveyl/dda-mod-ci/releases/latest --jq '.tag_name' || echo "")
+        if [ "$matrix_release" == "$latest_tag" ]; then
+          echo "Latest release tag already exists. Exiting workflow."
+          exit 0
+        fi
     - name: checkout myself
       uses: actions/checkout@v4
     - name: release
