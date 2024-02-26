@@ -73,7 +73,9 @@ jobs:
     - name: check tag
       run: |
         latest_tag=$(gh api /repos/${{ github.repository }}/releases/latest --jq '.tag_name' || echo "")
-        if [ "$matrix.release" == "$latest_tag" ]; then
+        echo "Matrix Release: $matrix_release"
+        echo "Latest Tag: $latest_tag"
+        if [ "$matrix_release" == "$latest_tag" ]; then
           echo "Latest release tag already exists. Exiting workflow."
           exit 0
         fi
