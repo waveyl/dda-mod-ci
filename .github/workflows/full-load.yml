@@ -87,7 +87,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/SurFlurer/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
-        url=$(jq '.assets |.[1] |.browser_download_url' release.data | sed 's/"//g')
+        url=$(jq '.assets |.[0] |.browser_download_url' release.data | sed 's/"//g')
         echo $url
         curl -o 'cata_test' -L $url
         # unzip -q 'cata_test.zip'
