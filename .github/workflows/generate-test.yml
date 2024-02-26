@@ -112,12 +112,12 @@ jobs:
  #       if-no-files-found: ignore
     - name: mv exe
       run: |
-          mv cataclysm-tiles ../
+         # mv cataclysm-tiles ../
           mv tests/cata_test ../
     - name: checkout myself
       uses: actions/checkout@v3
     - name: upload executable
       run: |
-        gh release upload ${{ matrix.release }} ../cataclysm-tiles
+       # gh release upload ${{ matrix.release }} ../cataclysm-tiles
         gh release upload ${{ matrix.release }} ../cata_test
       
