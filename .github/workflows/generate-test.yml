@@ -70,15 +70,6 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions: write-all
     steps:
-    - name: check tag
-      run: |
-        latest_tag=$(gh api /repos/${{ github.repository }}/releases/latest --jq '.tag_name' || echo "")
-        echo "Matrix Release: $matrix_release"
-        echo "Latest Tag: $latest_tag"
-        if [ "${{matrix.release}}" == "$latest_tag" ]; then
-          echo "Latest release tag already exists. Exiting workflow."
-          exit 0
-        fi
     - name: checkout myself
       uses: actions/checkout@v4
     - name: release
