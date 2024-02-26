@@ -72,7 +72,7 @@ jobs:
     steps:
     - name: check tag
       run: |
-        latest_tag=$(gh api /repos/waveyl/dda-mod-ci/releases/latest --jq '.tag_name' || echo "")
+        latest_tag=$(gh api /repos/${{ github.repository }}/releases/latest --jq '.tag_name' || echo "")
         if [ "$matrix_release" == "$latest_tag" ]; then
           echo "Latest release tag already exists. Exiting workflow."
           exit 0
