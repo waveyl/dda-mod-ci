@@ -7,6 +7,8 @@ on:
   push:
     branches:
     - main
+    paths:
+    - '**/generate-test.yml'
     
 #concurrency:
 #  group: test-build-${{ github.event.pull_request.number || github.ref_name }}

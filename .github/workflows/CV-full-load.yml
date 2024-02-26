@@ -5,6 +5,8 @@ on:
   push:
    branches:
     - main
+   paths:
+    - '**/CV-full-load.yml'
   schedule:
     - cron:  '0 0 * * *'
     
