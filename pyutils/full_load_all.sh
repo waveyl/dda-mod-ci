@@ -24,26 +24,19 @@ function run_test
     $WINE "$test_bin" ${cata_test_opts} "$@" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' || test_exit_code="${PIPESTATUS[0]}" sed_exit_code="${PIPESTATUS[1]}"
     if [ "$test_exit_code" -ne "0" ]
     then
-        echo "$3test exited with code $test_exit_code"
         exit_code=1
     fi
     if [ "$sed_exit_code" -ne "0" ]
     then
-        echo "$3sed exited with code $sed_exit_code"
         exit_code=1
     fi
     return $exit_code
 }
 export -f run_test
 
-# Run the tests with all the mods, without actually running any tests,
-# just to verify that all the mod data can be successfully loaded.
-# Because some mods might be mutually incompatible we might need to run a few times.
-
-./build-scripts/full_get_mods.py | \
-            while read mods
-            do
+function every_mod
             {
+    mods=$1
                 run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --drop-world --user-dir=all_modded --mods="${mods}" > "${mods}.data"
                 result=$?
                 if [[ $result -eq 0 ]]
@@ -56,4 +49,10 @@ export -f run_test
                     cat "${mods}.data"
                 fi
             }
-            done
+export -f every_mod
+
+# Run the tests with all the mods, without actually running any tests,
+# just to verify that all the mod data can be successfully loaded.
+# Because some mods might be mutually incompatible we might need to run a few times.
+
+./build-scripts/full_get_mods.py | parallel -j 4 every_mod
