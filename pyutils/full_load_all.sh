@@ -35,20 +35,21 @@ function run_test
 export -f run_test
 
 function every_mod
-            {
+{
     mods=$1
-                run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --drop-world --user-dir=all_modded --mods="${mods}" > "${mods}.data"
-                result=$?
-                if [[ $result -eq 0 ]]
-                then
-                    echo "${mods}: OK" >> result.json
-                fi
-                if [[ $result -eq 1 ]]
-                then
-                    echo "${mods}: ERROR" >> result.json
-                    cat "${mods}.data"
-                fi
-            }
+    run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --drop-world --user-dir=all_modded --mods="${mods}" > "${mods}.data"
+    result=$?
+    if [[ $result -eq 0 ]]
+    then
+        echo "${mods}: OK" >> result.json
+    fi
+    if [[ $result -eq 1 ]]
+    then
+        echo "error" >> error.sig
+        echo "${mods}: ERROR" >> result.json
+        cat "${mods}.data"
+    fi
+}
 export -f every_mod
 
 # Run the tests with all the mods, without actually running any tests,
@@ -56,3 +57,9 @@ export -f every_mod
 # Because some mods might be mutually incompatible we might need to run a few times.
 
 ./build-scripts/full_get_mods.py | parallel -j 4 every_mod
+if [ ! -f "error.sig" ];then
+    exit 0
+else
+    exit 1
+fi
+
