@@ -6,7 +6,7 @@ echo "Using bash version $BASH_VERSION"
 #set -x pipefail
 
 cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time ${EXTRA_TEST_OPTS}"
-[ -z $NUM_TEST_JOBS ] && num_test_jobs=3 || num_test_jobs=$NUM_TEST_JOBS
+num_test_jobs=4
 
 # We might need binaries installed via pip, so ensure that our personal bin dir is on the PATH
 export PATH=$HOME/.local/bin:$PATH
@@ -56,7 +56,10 @@ export -f every_mod
 # just to verify that all the mod data can be successfully loaded.
 # Because some mods might be mutually incompatible we might need to run a few times.
 
-./build-scripts/full_get_mods.py | parallel -j 4 every_mod
+./build-scripts/full_get_mods.py | parallel -j $num_test_jobs every_mod
+
+cat result.json
+
 if [ ! -f "error.sig" ];then
     exit 0
 else
