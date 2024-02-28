@@ -16,12 +16,12 @@ function run_test
 {
     {
     set -o pipefail
-    test_bin=$1
-    mods=$2
+    test_bin=./tests/cata_test
+    mods="$@"
     prefix="(${mods})=>"
     shift 2
     } &> /dev/null
-    $WINE "$test_bin" ${cata_test_opts} "$@" --mods="${mods}" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' > "${mods}.data" || result="${PIPESTATUS[0]}"
+    $WINE "$test_bin" ${cata_test_opts} '[force_load_game]' --mods="${mods}" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' > "${mods}.data" || result="${PIPESTATUS[0]}"
     if [[ $result -eq 0 ]]
     then
         echo "${mods}: OK" >> result.json
@@ -33,19 +33,11 @@ function run_test
 }
 export -f run_test
 
-function every_mod
-{
-    mods=$1
-    run_test ./tests/cata_test ${mods} '[force_load_game]' 
-
-}
-export -f every_mod
-
 # Run the tests with all the mods, without actually running any tests,
 # just to verify that all the mod data can be successfully loaded.
 # Because some mods might be mutually incompatible we might need to run a few times.
 
-./build-scripts/full_get_mods.py | parallel -j $num_test_jobs every_mod
+./build-scripts/full_get_mods.py | parallel -j $num_test_jobs run_test
 
 cat result.json
 
