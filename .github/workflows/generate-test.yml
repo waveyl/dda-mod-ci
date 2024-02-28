@@ -98,18 +98,11 @@ jobs:
         git config --global user.name "runner"
         git am modci/dda-mod-ci/patch/0001-disable-test-mode.patch
         git am modci/dda-mod-ci/patch/0002-stop-checking-too-many-mattacks-of-a-type.patch
-        # git am modci/dda-mod-ci/patch/0003-Do-not-check-for-last-world-info.patch
         git am modci/dda-mod-ci/patch/0004-no-check-mattack-overwrite.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: build
       run: bash ./build-scripts/gha_compile_only.sh
-#    - name: upload test suite
- #     uses: actions/upload-artifact@v3.1.2
-#      with:
-#        name: cata_test
- #       path: tests/cata_test*
- #       if-no-files-found: ignore
     - name: mv exe
       run: |
          # mv cataclysm-tiles ../
