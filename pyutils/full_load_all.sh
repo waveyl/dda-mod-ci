@@ -5,7 +5,7 @@
 echo "Using bash version $BASH_VERSION"
 #set -x pipefail
 
-cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time ${EXTRA_TEST_OPTS}"
+cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time --drop-world --user-dir=all_modded ${EXTRA_TEST_OPTS}"
 num_test_jobs=4
 
 # We might need binaries installed via pip, so ensure that our personal bin dir is on the PATH
@@ -16,39 +16,28 @@ function run_test
 {
     {
     set -o pipefail
-    test_exit_code=0 sed_exit_code=0 exit_code=0
     test_bin=$1
-    prefix=$2
+    mods=$2
+    prefix="(${mods})=>"
     shift 2
     } &> /dev/null
-    $WINE "$test_bin" ${cata_test_opts} "$@" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' || test_exit_code="${PIPESTATUS[0]}" sed_exit_code="${PIPESTATUS[1]}"
-    if [ "$test_exit_code" -ne "0" ]
+    $WINE "$test_bin" ${cata_test_opts} "$@" --mods="${mods}" 2>&1 | sed -E 's/^(::(warning|error|debug)[^:]*::)?/\1'"$prefix"'/' > "${mods}.data" || result="${PIPESTATUS[0]}"
+    if [[ $result -eq 0 ]]
     then
-        exit_code=1
+        echo "${mods}: OK" >> result.json
+    else
+        echo "error" >> error.sig
+        echo "${mods}: ERROR" >> result.json
+        cat "${mods}.data"
     fi
-    if [ "$sed_exit_code" -ne "0" ]
-    then
-        exit_code=1
-    fi
-    return $exit_code
 }
 export -f run_test
 
 function every_mod
 {
     mods=$1
-    run_test ./tests/cata_test "(${mods})=>" '[force_load_game]' --drop-world --user-dir=all_modded --mods="${mods}" > "${mods}.data"
-    result=$?
-    if [[ $result -eq 0 ]]
-    then
-        echo "${mods}: OK" >> result.json
-    fi
-    if [[ $result -eq 1 ]]
-    then
-        echo "error" >> error.sig
-        echo "${mods}: ERROR" >> result.json
-        cat "${mods}.data"
-    fi
+    run_test ./tests/cata_test ${mods} '[force_load_game]' 
+
 }
 export -f every_mod
 
