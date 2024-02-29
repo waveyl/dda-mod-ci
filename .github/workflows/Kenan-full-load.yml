@@ -53,7 +53,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.fetch_release.outputs.releases) }}
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: false
     name: ${{ matrix.release }}
     env:
       ZSTD_CLEVEL: 17
@@ -78,9 +78,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install libncursesw5-dev ccache gettext parallel
           sudo locale-gen en_US.UTF-8 de_DE.UTF-8
-    - name: install SDL2 dependencies (ubuntu)
-      run: |
-          sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev libflac-dev
+    # - name: install SDL2 dependencies (ubuntu)
+    #   run: |
+    #       sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev libflac-dev
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: get test suite
@@ -89,7 +89,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/waveyl/dda-mod-ci/releases/tags/${{matrix.release}} > release.data
-        url=$(jq '.assets |.[1] |.browser_download_url' release.data | sed 's/"//g')
+        url=$(jq '.assets |.[0] |.browser_download_url' release.data | sed 's/"//g')
         echo $url
         curl -o 'cata_test' -L $url
         # unzip -q 'cata_test.zip'
@@ -132,9 +132,9 @@ jobs:
         rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
       run: bash ./build-scripts/full_load_all.sh
-    - name: upload results
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{matrix.release}}result.json
-        path: result.json*
-        if-no-files-found: ignore
+    # - name: upload results
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: ${{matrix.release}}result.json
+    #     path: result.json*
+    #     if-no-files-found: ignore
