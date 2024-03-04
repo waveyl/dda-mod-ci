@@ -46,17 +46,32 @@ jobs:
         token: ${{ secrets.PAT }}
     - name: Commit files
       run: |
+          sudo apt-get update
+          sudo apt-get install curl
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           release=${{ matrix.release }}
           release=${release#*-}
           release=${release#*-}
           link_prefix="mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/"
-          echo $release
+
           msvc_link=""$link_prefix"cdda-windows-tiles-x64-msvc-"$release".zip"
           mingw_link=""$link_prefix"cdda-windows-tiles-x64-"$release".zip"
           android_link=""$link_prefix"cdda-android-x64-"$release".apk"
-          echo $msvc_link
+          
+          curl -L -o temp $msvc_link
+          if [ $(ls -l temp | awk '{print $5}') -lt 100 ]; then
+            msvc_link="无"
+          fi
+          curl -L -o temp $mingw_link
+          if [ $(ls -l temp | awk '{print $5}') -lt 100 ]; then
+            mingw_link="无"
+          fi
+          curl -L -o temp $android_link
+          if [ $(ls -l temp | awk '{print $5}') -lt 100 ]; then
+            android_link=="无"
+          fi
+          rm -f temp
           echo -e $release"\n" > README.md
           echo -e "Android x64:\n" >> README.md
           echo -e ""$android_link"\n" >> README.md
