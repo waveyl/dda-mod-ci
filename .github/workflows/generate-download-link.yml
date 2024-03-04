@@ -51,17 +51,19 @@ jobs:
           release=${{ matrix.release }}
           release=${release#*-}
           release=${release#*-}
-          link_prefix="mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/"
+          link_prefix="mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/"
           echo $release
-          msvc_link=""$link_prefix"cdda-experimental-"$release"/cdda-windows-tiles-x64-msvc-"$release".zip"
+          msvc_link=""$link_prefix"cdda-windows-tiles-x64-msvc-"$release".zip"
+          mingw_link=""$link_prefix"cdda-windows-tiles-x64-"$release".zip"
+          android_link=""$link_prefix"cdda-android-x64-"$release".apk"
           echo $msvc_link
           echo -e $release"\n" > README.md
           echo -e "Android x64:\n" >> README.md
-          echo -e "mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-android-x64-"$release".apk\n" >> README.md
+          echo -e ""$android_link"\n" >> README.md
           echo -e "Windows x64 msvc:\n" >> README.md
-          echo -e "mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-windows-tiles-x64-msvc-"$release".zip\n" >> README.md
+          echo -e ""$msvc_link"\n" >> README.md
           echo -e "Windows x64:\n" >> README.md
-          echo -e "mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/cdda-windows-tiles-x64-"$release".zip\n" >> README.md
+          echo -e ""$mingw_link"\n" >> README.md
           echo -e "请复制链接到浏览器打开\n" >> README.md
           git add .
           git commit -m "auto-update"
