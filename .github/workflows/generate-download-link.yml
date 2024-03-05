@@ -43,7 +43,6 @@ jobs:
       with:
         ref: result
         fetch-depth: 0
-        token: ${{ secrets.PAT }}
     - name: Commit files
       run: |
           sudo apt-get update
