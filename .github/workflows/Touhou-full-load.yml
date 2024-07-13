@@ -8,7 +8,7 @@ on:
    paths:
     - '**/Touhou-full-load.yml'
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '15 0 * * *'
     
 #concurrency:
 #  group: load-build-${{ github.event.pull_request.number || github.ref_name }}
