@@ -52,7 +52,7 @@ jobs:
           release=${{ matrix.release }}
           release=${release#*-}
           release=${release#*-}
-          link_prefix="mirror.ghproxy.com/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/"
+          link_prefix="ghproxy.org/github.com/CleverRaven/Cataclysm-DDA/releases/download/cdda-experimental-"$release"/"
 
           msvc_link=""$link_prefix"cdda-windows-tiles-x64-msvc-"$release".zip"
           mingw_link=""$link_prefix"cdda-windows-tiles-x64-"$release".zip"
