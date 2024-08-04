@@ -15,11 +15,10 @@ index 0a69fd8b1c..ea16adb6dc 100644
          if( iter != special_attacks_names.end() ) {
              special_attacks_names.erase( iter );
          }
--        if( test_mode ) {
 +        if( test_mode && false ) {
              debugmsg( "%s specifies more than one attack of (sub)type %s, ignoring all but the last",
                        id.c_str(), new_attack->id.c_str() );
-         }
++        }
 -- 
 2.37.3.windows.1
 
