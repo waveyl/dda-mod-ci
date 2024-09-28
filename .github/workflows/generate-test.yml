@@ -76,7 +76,7 @@ jobs:
       run: |
         mkdir modci
         cd modci
-        git clone https://github.com/waveyl/dda-mod-ci/
+        git clone -b 0.H https://github.com/waveyl/dda-mod-ci/
         cd ..
         git config --global user.email "runner@github.com"
         git config --global user.name "runner"
