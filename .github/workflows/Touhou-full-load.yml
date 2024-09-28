@@ -2,13 +2,6 @@ name: Touhou's mods test
 
 on:
   workflow_dispatch:
-  push:
-   branches:
-    - main
-   paths:
-    - '**/Touhou-full-load.yml'
-  schedule:
-    - cron:  '15 0 * * *'
     
 #concurrency:
 #  group: load-build-${{ github.event.pull_request.number || github.ref_name }}
@@ -113,7 +106,7 @@ jobs:
         # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
     - name: cnk
       run: |
-        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
+        git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/tree/0.H/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
         cp -r Kenan-Structured-Modpack/Cataclysm-DDA-Touhou-Mod ../data/mods/
         cp -r Kenan-Structured-Modpack/Cataclysm-DDA-Touhou-Expansion ../data/mods/
