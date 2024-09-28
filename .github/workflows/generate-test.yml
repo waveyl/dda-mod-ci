@@ -82,7 +82,7 @@ jobs:
         git config --global user.name "runner"
         git am modci/dda-mod-ci/patch/0001-disable-test-mode.patch
         # git am modci/dda-mod-ci/patch/0002-stop-checking-too-many-mattacks-of-a-type.patch
-        git am modci/dda-mod-ci/patch/0004-no-check-mattack-overwrite.patch
+        # git am modci/dda-mod-ci/patch/0004-no-check-mattack-overwrite.patch
     - name: prepare
       run: bash ./build-scripts/requirements.sh
     - name: build
