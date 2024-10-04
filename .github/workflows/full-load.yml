@@ -1,8 +1,10 @@
-name: test suite load mods
+name: abandon mod test
 
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+      - abandon
 #  push:
  #   branches:
  #   - main
