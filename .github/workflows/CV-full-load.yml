@@ -116,10 +116,6 @@ jobs:
         git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
         cp -r Kenan-Structured-Modpack/Arcana ../data/mods/
-        cp -r Kenan-Structured-Modpack/DDA_Arcana_Aftershock_Patch ../data/mods/
-        cp -r Kenan-Structured-Modpack/DDA_Arcana_Cata++_Patch ../data/mods/
-        cp -r Kenan-Structured-Modpack/DDA_Arcana_Dinomod_Patch ../data/mods/
-        cp -r Kenan-Structured-Modpack/DDA_Arcana_Magiclysm_Patch ../data/mods/
         cp -r Kenan-Structured-Modpack/Dorf_Life ../data/mods/
         cp -r Kenan-Structured-Modpack/Medieval_Mod_Reborn ../data/mods/
         cp -r Kenan-Structured-Modpack/Mining_Mod ../data/mods/
