@@ -17,7 +17,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: fetch
         run: |
-          matrix='{ "release" : [ "cdda-0.H-2024-09-22-2259" ] }'
+          matrix='{ "release" : [ "0.H-RELEASE" ] }'
           echo $matrix
           echo "releases=$matrix" >> $GITHUB_OUTPUT
  # check-matrix:
