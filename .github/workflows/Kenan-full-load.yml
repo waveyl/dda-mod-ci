@@ -116,7 +116,6 @@ jobs:
         git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
         cp -r Kenan-Structured-Modpack/Arcana ../data/mods/
-        cp -r Kenan-Structured-Modpack/BL9-100%_monster_resilience_version ../data/mods/
         cp -r Kenan-Structured-Modpack/CulinaryDaysAhead ../data/mods/
         cp -r Kenan-Structured-Modpack/Dino_Mad_Science ../data/mods/
         cp -r Kenan-Structured-Modpack/Lighter_Weariness ../data/mods/
