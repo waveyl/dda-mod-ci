@@ -6,7 +6,7 @@ echo "Using bash version $BASH_VERSION"
 set -x pipefail
 
 cata_test_opts="--min-duration 20 --use-colour yes --rng-seed time --drop-world --user-dir=all_modded ${EXTRA_TEST_OPTS}"
-num_test_jobs=4
+num_test_jobs=1
 
 # We might need binaries installed via pip, so ensure that our personal bin dir is on the PATH
 export PATH=$HOME/.local/bin:$PATH
