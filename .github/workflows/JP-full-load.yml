@@ -53,7 +53,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.fetch_release.outputs.releases) }}
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: false
     name: ${{ matrix.release }}
     env:
       ZSTD_CLEVEL: 17
