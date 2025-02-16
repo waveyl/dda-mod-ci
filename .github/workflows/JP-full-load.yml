@@ -115,7 +115,7 @@ jobs:
       run: |
         git clone https://github.com/linonetwo/CDDA-Kenan-Modpack-Chinese/ --depth=1
         cd CDDA-Kenan-Modpack-Chinese/
-        cp -r Kenan-Structured-Modpack/Project_Kawaii ../data/mods/
+        cp -r Kenan-Structured-Modpack/Kawaii_New1.1 ../data/mods/
         cp -r Kenan-Structured-Modpack/VOICEROID+Ex_mod ../data/mods/
         cp -r Kenan-Structured-Modpack/NPC_VOICEROIDs ../data/mods/
         rm -rf CDDA-Kenan-Modpack-Chinese/
