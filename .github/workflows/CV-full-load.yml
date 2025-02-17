@@ -121,7 +121,6 @@ jobs:
         cp -r Kenan-Structured-Modpack/Mining_Mod ../data/mods/
         cp -r Kenan-Structured-Modpack/MST_Extra ../data/mods/
         cp -r Kenan-Structured-Modpack/nocts_cata_mod_DDA ../data/mods/
-        cp -r Kenan-Structured-Modpack/Nonperishable_Overhaul ../data/mods/
         cp -r Kenan-Structured-Modpack/Tankmod_Revived ../data/mods/
         rm -rf CDDA-Kenan-Modpack-Chinese/
     - name: run tests
