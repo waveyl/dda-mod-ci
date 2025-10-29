@@ -8,8 +8,8 @@ on:
         default: "master"
         required: false
       kenan-ref:
-        description: "Kenan-Structured-Modpack ref (branch/sha)"
-        default: "master"
+        description: "linonetwo-Structured-Modpack ref (branch/sha)"
+        default: "update"
         required: false
       max-iters:
         description: "Max per-mod iterations"
@@ -36,7 +36,7 @@ jobs:
       - name: Checkout Kenan-Structured-Modpack
         uses: actions/checkout@v4
         with:
-          repository: Kenan2000/Kenan-Structured-Modpack
+          repository: linonetwo/Kenan-Structured-Modpack
           ref: ${{ inputs.kenan-ref }}
           path: Kenan-Structured-Modpack
 
