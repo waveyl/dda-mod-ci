@@ -68,7 +68,7 @@ jobs:
       CCACHE_HARDLINK: true
       CCACHE_NOCOMPRESS: true
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
+  steps:
     - name: checkout repository
       uses: actions/checkout@v4
       with:
@@ -89,13 +89,7 @@ jobs:
     - name: install dependencies (ubuntu)
       run: |
           sudo apt-get update
-          sudo apt-get install libncursesw5-dev ccache gettext parallel
-          sudo locale-gen en_US.UTF-8 de_DE.UTF-8
-    - name: install SDL2 dependencies (ubuntu)
-      run: |
-          sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev libpulse-dev
-    - name: prepare
-      run: bash ./build-scripts/requirements.sh
+          sudo apt-get install -y jq unzip curl python3
     - name: get test suite
       run: |
         gh api \
@@ -109,17 +103,17 @@ jobs:
         #  mv 'cata_test' 'tests/'
         sudo chmod a+x cataclysm-tiles
    #     make localization LANGUAGES=all
-    - name: mod test suite
+    - name: prepare runner scripts
       run: |
-        # sed -i '58s/parallel/#parallel/g' build-scripts/gha_test_only.sh
-        mkdir modci
+        mkdir -p modci
         cd modci
-        git clone https://github.com/waveyl/dda-mod-ci/
-        cp dda-mod-ci/pyutils/basic_get_mods.py ../build-scripts/
-        cp dda-mod-ci/pyutils/basic_load_all.sh ../build-scripts/
-        sudo chmod a+x ../build-scripts/basic_get_mods.py
-        sudo chmod a+x ../build-scripts/basic_load_all.sh
+        git clone https://github.com/waveyl/dda-mod-ci/ .
         cd ..
-        # sed -i '70s/get_all_mods/get_mods/g' build-scripts/gha_test_only.sh
-    - name: run tests
-      run: bash ./build-scripts/basic_load_all.sh
+        sudo chmod a+x ./modci/pyutils/basic_get_mods.py
+        sudo chmod a+x ./modci/pyutils/basic_load_all.sh
+    - name: run checks (aggregate without build)
+      env:
+        EXE: ./cataclysm-tiles
+        LOG_DIR: ./modci-logs
+        MAX_ITERS: 80
+      run: bash ./modci/pyutils/basic_load_all.sh

@@ -1,3 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+EXE="${EXE:-./cataclysm-tiles}"
+LOG_DIR="${LOG_DIR:-./modci-logs}"
+ONLY="${ONLY:-}"
+MAX_ITERS="${MAX_ITERS:-80}"
+
+mkdir -p "$LOG_DIR"
+
+echo "Listing mod ids from data/mods …"
+python3 ./pyutils/basic_get_mods.py --mods-dir ./data/mods --only "$ONLY" > modlist.txt || true
+
+if [[ ! -s modlist.txt ]]; then
+  echo "No mods detected under data/mods"
+  exit 0
+fi
+
+echo "Found $(wc -l < modlist.txt) mods"
+
+while read -r MID; do
+  [[ -z "$MID" ]] && continue
+  echo "== Checking $MID =="
+  OUT_DIR="$LOG_DIR/$MID"
+  mkdir -p "$OUT_DIR"
+  python3 ./pyutils/check_mods_iter.py --exe "$EXE" --modid "$MID" --log-dir "$OUT_DIR" --max-iters "$MAX_ITERS" || true
+done < modlist.txt
+
+echo "Done. Logs at $LOG_DIR"
 #!/bin/bash
 
 # 说明：
