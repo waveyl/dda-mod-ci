@@ -1,0 +1,89 @@
+name: Check Mods (aggregate errors)
+
+on:
+  workflow_dispatch:
+    inputs:
+      cdda-ref:
+        description: "Cataclysm-DDA ref (branch/sha)"
+        default: "master"
+        required: false
+      kenan-ref:
+        description: "linonetwo-Structured-Modpack ref (branch/sha)"
+        default: "update"
+        required: false
+      max-iters:
+        description: "Max per-mod iterations"
+        default: "80"
+        required: false
+      only:
+        description: "Space-separated mod ids to run (optional)"
+        required: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dda-mod-ci
+        uses: actions/checkout@v4
+
+      - name: Checkout Cataclysm-DDA
+        uses: actions/checkout@v4
+        with:
+          repository: CleverRaven/Cataclysm-DDA
+          ref: ${{ inputs.cdda-ref }}
+          path: Cataclysm-DDA
+
+      - name: Checkout Kenan-Structured-Modpack
+        uses: actions/checkout@v4
+        with:
+          repository: linonetwo/CDDA-Kenan-Modpack-Chinese
+          ref: ${{ inputs.kenan-ref }}
+          path: Kenan-Structured-Modpack
+
+      - name: Apply patches to Cataclysm-DDA (optional)
+        run: |
+          set -e
+          PATCH_DIR="./patch"
+          if compgen -G "$PATCH_DIR/*.patch" > /dev/null; then
+            for p in $PATCH_DIR/*.patch; do
+              echo "Applying $p"
+              (cd Cataclysm-DDA && git am "$GITHUB_WORKSPACE/$p") || {
+                echo "git am failed for $p, trying git apply";
+                (cd Cataclysm-DDA && git apply -p1 "$GITHUB_WORKSPACE/$p") || true;
+              }
+            done
+          else
+            echo "No patches found in $PATCH_DIR"
+          fi
+
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ccache libncursesw5-dev gettext
+
+      - name: Configure (minimal, non-tiles)
+        working-directory: Cataclysm-DDA
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTILES=OFF -DSOUND=OFF -DLOCALIZE=OFF
+
+      - name: Build cataclysm
+        working-directory: Cataclysm-DDA
+        run: |
+          cmake --build build -j 2 --target cataclysm
+
+      - name: Run checks (aggregate)
+        run: |
+          python3 ./pyutils/run_all_mods.py \
+            --cdda ./Cataclysm-DDA \
+            --mods ./Kenan-Structured-Modpack \
+            --exe ./Cataclysm-DDA/build/cataclysm \
+            --log-dir ./modci-logs \
+            --max-iters ${{ inputs.max-iters }} \
+            ${{ inputs.only && format('--only {0}', inputs.only) || '' }}
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: modci-logs
+          path: modci-logs
